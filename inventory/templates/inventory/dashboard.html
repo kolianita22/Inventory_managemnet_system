@@ -1,0 +1,42 @@
+{% extends "inventory/base.html" %}
+{% block title %}Dashboard - Inventory Management System{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mt-5 max-auto">
+       <div class="d-flex justify-content-end mb-4">
+        <a href="#" class="btn btn-outline-danger">+</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Category</th>
+                <th scope="col">Last Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if items|length==0 %}
+            <tr>
+                <th scope="row">1</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            
+            </tr>
+            {% endif %}
+            {% for item in items %}
+            <tr>
+                <th scope="row">{{ item.id }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.last_updated }}</td>
+            </tr>
+            {% endfor %}
+          
+        </tbody>
+</div>
+{% endblock %}
