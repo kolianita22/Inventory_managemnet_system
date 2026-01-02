@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-primary mb-3">Go Back</a>
+        <div class='row'>
+            <form method="post" class="col-11 col-md-6 mx-auto mt-5">
+                {% csrf_token %}
+                <h3 class="fw-light text-center mb-4">Are you sure you want to delete "{{ item.name }}"?</h3>
+                <p class="fw-light text-center text-muted mb-4">This action cannot be undone.</p>
+                <div>
+                    <button type="submit" class="btn btn-danger d-block mx-auto">Yes, Delete</button>
+                </div>
+            </form>
+        </div>
+</div>
+{% endblock %}
