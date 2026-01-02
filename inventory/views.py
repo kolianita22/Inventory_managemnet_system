@@ -11,7 +11,6 @@ def Index(request):
 
 class Dashboard(View):
     def get(self, request):
-
         items=InventoryItem.objects.filter(user=self.request.user.id).order_by('id')
         return render(request, 'inventory/dashboard.html', {'items':items})
 

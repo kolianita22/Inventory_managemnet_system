@@ -8,6 +8,7 @@ class InventoryItem(models.Model):
     quantity = models.PositiveIntegerField()
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, blank=True)
     added_on = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return self.name
     
