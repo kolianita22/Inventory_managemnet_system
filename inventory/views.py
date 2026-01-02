@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.contrib.auth import authenticate, login
 from .models import Category, InventoryItem
@@ -52,7 +52,7 @@ class EditItem(LoginRequiredMixin,UpdateView):
     template_name='inventory/add_item.html'
     success_url=reverse_lazy('dashboard')
 
-class DeleteItem(LoginRequiredMixin,View):
+class DeleteItem(LoginRequiredMixin,DeleteView):
     model=InventoryItem
     template_name='inventory/delete_item.html'
     
