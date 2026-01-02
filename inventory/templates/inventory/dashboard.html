@@ -1,6 +1,21 @@
 {% extends "inventory/base.html" %}
 {% block title %}Dashboard - Inventory Management System{% endblock %}
 {% block content %}
+  {% if messages %}
+    <div class="row mt-3">
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger alert-dismissible fade show col-11 col-md-6 mx-auto" role="alert">
+                    {{message}}
+            {% else %}
+                <div class="alert alert-success alert-dismissible fade show col-11 col-md-6 mx-auto" role="alert">
+                    {{message}}
+            {% endif %}
+              
+        {% endfor %}
+    </div>
+    {% endif %}
+
 <div class="row">
     <div class="col-md-12 text-center mt-5 max-auto">
        <div class="d-flex justify-content-end mb-4">
@@ -14,8 +29,9 @@
                 <th scope="col">Quantity</th>
                 <th scope="col">Category</th>
                 <th scope="col">Added On</th>
-                 <td></td>
-                 
+                <td></td>
+                <td></td>
+                
             </tr>
         </thead>
         <tbody>
@@ -35,7 +51,11 @@
             <tr>
                 <th scope="row">{{ item.id }}</th>
                 <td>{{ item.name }}</td>
-                <td>{{ item.quantity }}</td>
+                {% if item.id in low_inventory_ids %}
+                    <td class="text-danger">{{ item.quantity }}</td>
+                {% else %}
+                    <td class="text-success">{{ item.quantity }}</td>
+                {% endif %}
                 <td>{{ item.category }}</td>
                 <td>{{ item.added_on }}</td>
                 <td>

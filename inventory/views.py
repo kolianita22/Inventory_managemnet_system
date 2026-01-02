@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
@@ -6,8 +7,11 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import authenticate, login
 from .models import Category, InventoryItem
 from django.contrib.auth.mixins import LoginRequiredMixin 
+from django.contrib import messages
 from .forms import UserRegisterForm
 from .forms import InventoryItemForm
+
+from inventory_management.settings import LOW_QUANTITY
 # Create your views here
 def Index(request):
     return render(request, 'inventory/index.html')
@@ -15,7 +19,22 @@ def Index(request):
 class Dashboard(LoginRequiredMixin,View):
     def get(self, request):
         items=InventoryItem.objects.filter(user=self.request.user.id).order_by('id')
-        return render(request, 'inventory/dashboard.html', {'items':items})
+
+        low_inventory=InventoryItem.objects.filter(
+            user=self.request.user.id,
+            quantity__lte=LOW_QUANTITY)
+        if low_inventory.count()>0:
+            if low_inventory.count()>1:
+                messages.error(request,f'There are {low_inventory.count()} items low in inventory!') 
+            else:
+                messages.error(request,f'There is {low_inventory.count()} item low in inventory!')
+
+        low_inventory_ids=InventoryItem.objects.filter(
+            user=self.request.user.id,
+            quantity__lte=LOW_QUANTITY).values_list('id',flat=True)
+
+
+        return render(request, 'inventory/dashboard.html', {'items':items, 'low_inventory_ids':low_inventory_ids})
 
 class SignUpView(View):
     def get(self,request):
