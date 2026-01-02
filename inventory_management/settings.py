@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-*!9opwber%8159wvz&n4-g!1#rl25=!2@ilm_(m845&#k9#sbo
 DEBUG = True
 
 ALLOWED_HOSTS = ['.railway.app', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://inventorymanagemnetsystem-production.up.railway.app']
+
 
 
 # Application definition
